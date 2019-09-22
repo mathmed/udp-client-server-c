@@ -106,7 +106,7 @@ int main(){
     printf("\n");
     printf("|___________________ Servidor rodando na porta [2102] _________________________|");
     printf("\n");
-    printf("|_______________ Verificando informações da placa de rede [wlp3s0] ____________|");
+    printf("|_______________ Verificando informações na placa de rede [wlp3s0] ____________|");
     printf("\n");
     printf("|                                                                              |\n");
     printf("| **************************************************************************** |\n");
@@ -202,7 +202,15 @@ int main(){
             printf("\t-> result: %s\n",cabecario.result);
         
         } else {
+            
             printf("\n\nO servidor recebeu uma requisição, mas o pacote foi corrompido. \n\n");
+
+            /* Adicionando o tipo de erro */
+            cabecario.type = NSIP_ERR;
+            
+            /* Enviando para o cliente */
+            n = sendto(sockett, &cabecario, sizeof(cabecario), 0, (const struct sockaddr *) &cliente, sockettamanho);
+
         }
 
     }
